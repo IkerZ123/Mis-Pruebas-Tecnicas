@@ -1,6 +1,4 @@
 import { SetStateAction, useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
 import './App.css'
 
 import books from './books.json' assert { type: 'json' }
@@ -114,20 +112,22 @@ function App() {
         <div className="books-available">
           <h1>Tenemos disponibles {numberOfBooks} libros</h1>
           <h2>Tienes {numberOfReadings} en tu lista de lectura</h2>
-            <h2>Filtrar por Género:</h2>
-            <select value={selectedGenre} onChange={handleGenreChange}>
+          <div style={{display: 'flex', alignItems: 'center', gap: '5px'}}>
+            <h2 style={{margin: 0, marginRight: '10px'}}>Filtrar por Género:</h2>
+            <select value={selectedGenre} onChange={handleGenreChange} style={{height: "30px", minWidth: '150px', alignSelf: 'center'}}>
               <option value="Todos">Todos</option>
               <option value="Fantasía">Fantasía</option>
-              <option value="Ciencia Ficción">Ciencia Ficción</option>
+              <option value="Ciencia ficción">Ciencia Ficción</option>
               <option value="Zombies">Zombies</option>
               <option value="Romance">Romance</option>
               <option value="Terror">Terror</option>
             </select>
+          </div>
           {showBooksAvailable()}
         </div>
         <div style={{flex: 1}}>
           <h1>Tu lista de Lectura</h1>
-          {readings.length !== 0 ? showReadings() : <h2>No tienes nada por leer</h2>}
+            {readings.length !== 0 ? showReadings() : <h2>No tienes nada por leer</h2>}
         </div>
       </div>
       </main>

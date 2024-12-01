@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { SetStateAction, useState } from 'react'
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
@@ -37,12 +37,16 @@ function App() {
   // Cuantos libros hay en mi lista de lectura?
   const [numberOfReadings, setNumberOfReadings] = useState(0)
 
+  // Genero para filtro
+  const [selectedGenre, setSelectedGenre] = useState("Todos")
+
   // Mostrar los libros en la lista principal
   const showBooksAvailable = () => {
     return (
       <div className="image-container">
         {lib.library.map((item: { book: Book }) => {
           const book = item.book;
+          if(selectedGenre === 'Todos' || selectedGenre === book.genre)
           return (
             <div key={book.ISBN} className='book-card'>
               <h4>{book.title}</h4>
@@ -50,6 +54,7 @@ function App() {
               <button onClick={() => addBookToRead(book)}>Añadir a la lista de Lectura</button>
             </div>
           )
+          return <></>
         })}
       </div>
     )
@@ -69,6 +74,8 @@ function App() {
         ISBN: book.ISBN,
         author: book.author}])
     }
+    setNumberOfReadings(numberOfReadings + 1);
+    setNumberOfBooks(numberOfBooks - 1)
   }
 
   // Mostrar nuestra lista de lectura
@@ -90,6 +97,13 @@ function App() {
   // Quitar un libro que nos hayan dicho
   const deleteBookToRead = (book: Book) => {
     setReadings(readings.filter(reading => reading.ISBN !== book.ISBN))
+    setNumberOfReadings(numberOfReadings - 1)
+    setNumberOfBooks(numberOfBooks + 1)
+  }
+
+  // Cuando nos digan el genero para filtrar, lo cambiamos
+  const handleGenreChange = (event: { target: { value: SetStateAction<string> } }) => {
+    setSelectedGenre(event.target.value)
   }
 
   return (
@@ -99,6 +113,16 @@ function App() {
       <div className='ListsContainer'>
         <div className="books-available">
           <h1>Tenemos disponibles {numberOfBooks} libros</h1>
+          <h2>Tienes {numberOfReadings} en tu lista de lectura</h2>
+            <h2>Filtrar por Género:</h2>
+            <select value={selectedGenre} onChange={handleGenreChange}>
+              <option value="Todos">Todos</option>
+              <option value="Fantasía">Fantasía</option>
+              <option value="Ciencia Ficción">Ciencia Ficción</option>
+              <option value="Zombies">Zombies</option>
+              <option value="Romance">Romance</option>
+              <option value="Terror">Terror</option>
+            </select>
           {showBooksAvailable()}
         </div>
         <div style={{flex: 1}}>

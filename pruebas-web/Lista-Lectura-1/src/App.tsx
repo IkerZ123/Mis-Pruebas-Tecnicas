@@ -23,12 +23,19 @@ interface Author {
 
 function App() {
 
+  // Coger todos los datos de todos los libros
+  const lib = JSON.parse(JSON.stringify(books))
+
   // Nuestra Lista de lectura: guardamos los ISBN como identicadores
   // Importante hacerlo con array de Book!
   const [readings, setReadings] = useState<Book[]>([])
 
-  // Coger todos los datos de todos los libros
-  const lib = JSON.parse(JSON.stringify(books))
+  // Cuantos libros hay disponibles?
+  // Lo asignamos desde el principio
+  const [numberOfBooks, setNumberOfBooks] = useState(lib.library.length)
+
+  // Cuantos libros hay en mi lista de lectura?
+  const [numberOfReadings, setNumberOfReadings] = useState(0)
 
   // Mostrar los libros en la lista principal
   const showBooksAvailable = () => {
@@ -37,7 +44,8 @@ function App() {
         {lib.library.map((item: { book: Book }) => {
           const book = item.book;
           return (
-            <div key={book.ISBN}>
+            <div key={book.ISBN} className='book-card'>
+              <h4>{book.title}</h4>
               <img src={book.cover} alt={book.title}/>
               <button onClick={() => addBookToRead(book)}>Añadir a la lista de Lectura</button>
             </div>
@@ -89,10 +97,11 @@ function App() {
      <main>
       <h1>Primera Prueba Técnica: Lista de Lectura</h1>
       <div className='ListsContainer'>
-        <div>
+        <div className="books-available">
+          <h1>Tenemos disponibles {numberOfBooks} libros</h1>
           {showBooksAvailable()}
         </div>
-        <div>
+        <div style={{flex: 1}}>
           <h1>Tu lista de Lectura</h1>
           {readings.length !== 0 ? showReadings() : <h2>No tienes nada por leer</h2>}
         </div>

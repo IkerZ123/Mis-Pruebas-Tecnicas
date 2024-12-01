@@ -6,6 +6,7 @@
 }
 
 .image-container {
+  flex: 1;
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 10px; 
@@ -13,11 +14,25 @@
 
 .image-container img {
   width: 100%; 
-  height: 500px; 
+  height: 250px; 
   object-fit: cover; 
 }
 
 .ListsContainer {
   display: flex;
+  gap: 250px
+}
+
+.readings-container {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px; 
+}
+
+.readings-container img {
+  flex: 1;
+  width: 100%; 
+  height: 250px; 
+  object-fit: cover; 
 }
 

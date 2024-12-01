@@ -38,10 +38,7 @@ function App() {
           const book = item.book;
           return (
             <div key={book.ISBN}>
-              <img 
-                src={book.cover} 
-                alt={book.title}
-              />
+              <img src={book.cover} alt={book.title}/>
               <button onClick={() => addBookToRead(book)}>Añadir a la lista de Lectura</button>
             </div>
           )
@@ -66,7 +63,26 @@ function App() {
     }
   }
 
-  
+  // Mostrar nuestra lista de lectura
+  const showReadings = () => {
+    return (
+      <div className='readings-container'>
+        {readings.map(book => {
+          return (
+            <div key={book.ISBN}>
+              <img src={book.cover} alt={book.title}/>
+              <button onClick={() => deleteBookToRead(book)}>Quitar de la lista de Lectura</button>
+            </div>
+          )
+        })}
+      </div>
+    )
+  }
+
+  // Quitar un libro que nos hayan dicho
+  const deleteBookToRead = (book: Book) => {
+    setReadings(readings.filter(reading => reading.ISBN !== book.ISBN))
+  }
 
   return (
     <>
@@ -77,7 +93,8 @@ function App() {
           {showBooksAvailable()}
         </div>
         <div>
-          {showReadings()}
+          <h1>Tu lista de Lectura</h1>
+          {readings.length !== 0 ? showReadings() : <h2>No tienes nada por leer</h2>}
         </div>
       </div>
       </main>

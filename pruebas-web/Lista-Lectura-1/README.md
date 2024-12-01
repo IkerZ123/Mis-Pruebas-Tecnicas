@@ -48,3 +48,7 @@ export default tseslint.config({
   },
 })
 ```
+
+# Enunciado del problema
+- [Enunciado](https://github.com/midudev/pruebas-tecnicas/blob/main/pruebas/01-reading-list/README.md)
+- [Datos](https://github.com/midudev/pruebas-tecnicas/blob/main/pruebas/01-reading-list/books.json)

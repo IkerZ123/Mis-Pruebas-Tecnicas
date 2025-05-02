@@ -71,4 +71,8 @@ public class ExchangeService {
         return valueTo * amount / valueFrom;
     }
     
+
+    public String[] getAvailableCurrencies(){
+        return exchangeRates.keySet().toArray(new String[0]);
+    }
 }

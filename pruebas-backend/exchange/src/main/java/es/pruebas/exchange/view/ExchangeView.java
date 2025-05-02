@@ -1,10 +1,12 @@
 package es.pruebas.exchange.view;
 
 import es.pruebas.exchange.model.ExchangeService;
+import javafx.collections.FXCollections;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import javafx.collections.FXCollections;
 
 public class ExchangeView {
 
@@ -17,8 +19,14 @@ public class ExchangeView {
     }
 
     public void show() {
-        TextField from = new TextField("USD");
-        TextField to = new TextField("EUR");
+        String[] currencies = service.getAvailableCurrencies();
+
+        ComboBox<String> from = new ComboBox<>(FXCollections.observableArrayList(currencies));
+        from.setValue("USD");
+
+        ComboBox<String> to = new ComboBox<>(FXCollections.observableArrayList(currencies));
+        to.setValue("EUR");
+
         TextField amount = new TextField("100");
         Label result = new Label();
         Button convert = new Button("Convertir");
@@ -26,7 +34,7 @@ public class ExchangeView {
         convert.setOnAction(e -> {
             try {
                 double res = service.getConversion(
-                    from.getText(), to.getText(), Double.parseDouble(amount.getText())
+                    from.getValue(), to.getValue(), Double.parseDouble(amount.getText())
                 );
                 result.setText("Resultado: " + res);
             } catch (Exception ex) {

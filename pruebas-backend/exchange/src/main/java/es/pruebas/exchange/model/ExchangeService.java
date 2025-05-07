@@ -7,6 +7,7 @@ import java.util.Map;
 
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.servlet.tags.Param;
 
 
 @Service
@@ -63,10 +64,15 @@ public class ExchangeService {
 
 
     public double getConversion(String from, String to, double amount){
+
+        if(amount < 0)
+            throw new IllegalArgumentException("La cantidad a transformar no puede ser negativa");
+        
+
         Double valueFrom = exchangeRates.get(from);
         Double valueTo = exchangeRates.get(to);
 
-        if(valueFrom == null || valueTo == null) throw new IllegalArgumentException();
+        if(valueFrom == null || valueTo == null) throw new IllegalArgumentException("Código de moneda no válido");
 
         return valueTo * amount / valueFrom;
     }
